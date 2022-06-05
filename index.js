@@ -15,10 +15,11 @@ apiInstance.setApiKey(
 const main = async () => {
   const start = new Date();
   console.log("Start", start);
+  const username = `test-${Math.round(Math.random() * 10000)}`;
   // This is fast (2 - 4 seconds):
   // await apiInstance.sendTransacEmail({
   //   sender: { name: "John Doe", email: "test@ubox.org" },
-  //   to: [{ email: "test@mail.crusty.io" }],
+  //   to: [{ email: `${username}@mail.crusty.io` }],
   //   subject: "test mail",
   //   textContent: "hallo thomas",
   // });
@@ -26,11 +27,11 @@ const main = async () => {
   // This is really slow (>30 seconds):
   await apiInstance.sendTransacEmail({
     templateId: 3,
-    to: [{ email: "test@mail.crusty.io" }],
+    to: [{ email: `${username}@mail.crusty.io` }],
     params: { verificationLink: "youtube.com/watch?v=dQw4w9WgXcQ" },
   });
 
-  await request("http://mail.crusty.io:3002/test");
+  await request(`http://mail.crusty.io:3002/${username}`);
   const end = new Date();
   console.log("End", end);
   console.log("Delay", (end.getTime() - start.getTime()) / 1000, "seconds");
